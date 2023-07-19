@@ -17,9 +17,9 @@ export function makeMainApi(app: Construct) {
     const productsName = products.addResource('name');
 
     products.addMethod('GET', new LambdaIntegration(importLambda(app, 'modules.lambda.api.get-products')));
-    productsName.addMethod('GET', new LambdaIntegration(importLambda(app, 'modules.lambda.api.get.productsbyname')));
-    cart.addMethod('GET', new LambdaIntegration(importLambda(app, 'modules.lambda.api.post-cart')));
-    cart.addMethod('POST', new LambdaIntegration(importLambda(app, 'modules.lambda.api.get-cart')));
+    productsName.addMethod('GET', new LambdaIntegration(importLambda(app, 'modules.lambda.api.get-productsbyname')));
+    cart.addMethod('GET', new LambdaIntegration(importLambda(app, 'modules.lambda.api.get-cart')));
+    cart.addMethod('POST', new LambdaIntegration(importLambda(app, 'modules.lambda.api.post-cart')));
     orders.addMethod('POST', new LambdaIntegration(importLambda(app, 'modules.lambda.api.sqs-orders')));
 
 }
