@@ -20,7 +20,7 @@ export async function postCart (event:any): Promise<any> {
    const actived = true
    if (error == "notErrorRequest") { // validação
        const params = {
-           TableName: 'cart',
+           TableName: 'cart-cdk',
            Item: {
                id_user: productInCart.id_user,
                id_product: productInCart.id_product,
@@ -143,7 +143,7 @@ const manegeCart = async (action:string, qtd:int, id_user:string, id_product:str
 
 const auxGetDataProduct = async (id_product:string) => {
     const params = new QueryCommand({
-        TableName: 'products',
+        TableName: 'products-cdk',
         KeyConditionExpression: 'id_product = :id_product',
         ExpressionAttributeValues: {
             ':id_product': id_product
@@ -163,7 +163,7 @@ const getQtdProduct = async (id_user:string, id_product:string):Promise<any> => 
     // console.log("getAux:", getAux[0].price)
     
     const params = new QueryCommand({
-        TableName: 'cart',
+        TableName: 'cart-cdk',
         KeyConditionExpression: 'id_user = :id_user and id_product = :id_product',
         ExpressionAttributeValues: {
             ':id_user': id_user,

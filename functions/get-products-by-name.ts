@@ -9,7 +9,7 @@ export async function getProductsByName (event:any): Promise<any> {
     const name = event.queryStringParameters.search;
     
     const params = new ScanCommand ({
-        TableName : 'products',
+        TableName : 'products-cdk',
         FilterExpression : '#field_name = :this_name',
         ExpressionAttributeValues : {':this_name' : name},
         ExpressionAttributeNames : {'#field_name': 'nome'}

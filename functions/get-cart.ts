@@ -9,7 +9,7 @@ export async function getCart (event:any): Promise<any> {
     const productInCart = event.queryStringParameters;
     
     const params = new QueryCommand({
-        TableName: 'cart',
+        TableName: 'cart-cdk',
         KeyConditionExpression: 'id_user = :id_user',
         ExpressionAttributeValues: {
             ':id_user': productInCart.id_user
@@ -60,7 +60,7 @@ const productActivedInCart = (db:any) =>{
 
 const putActivedStatus = async (element:any, activedOrNot:boolean) => {
     const params = {
-        TableName: 'cart',
+        TableName: 'cart-cdk',
         Item: {
             id_user: element.id_user,
             id_product: element.id_product,

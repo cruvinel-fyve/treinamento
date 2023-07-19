@@ -28,7 +28,7 @@ export async function postOrders (event:any): Promise<any> {
     if (error.body == "notErrorRequest" || error.body != "invalid cep!") { // validação
         //const priceOrder = priceProductOrder + freight;
         const params = {
-            TableName: 'orders',
+            TableName: 'orders-cdk',
             Item: {
                 id_user: productInOrder.id_user,
                 data: new Date().toISOString(),
@@ -106,7 +106,7 @@ const validation = (params:any, products:any) => {
 const getDataProduct = async (id_user:string) => {
     
     const params = new QueryCommand({
-        TableName: 'cart',
+        TableName: 'cart-cdk',
         KeyConditionExpression: 'id_user = :id_user',
         ExpressionAttributeValues: {
             ':id_user': id_user,
@@ -145,7 +145,7 @@ const productActivedInCart = (db:any) =>{
 const putDisabledStatus = async (element:any) => {
     // console.log("element.id_product(put): ", element.id_product);
     const params = {
-        TableName: 'cart',
+        TableName: 'cart-cdk',
         Item: {
             image: element.image,
             category: element.category,
@@ -171,7 +171,7 @@ const modifyStock = async (element:any) => {
     //console.log("element.id_product(modify): ", element.id_product);
     try{
         var params = {
-            TableName: 'products',
+            TableName: 'products-cdk',
             Key: { id_product : element.id_product },
             UpdateExpression: 'set #qtdStock = #qtdStock - :qtdSale',
             ConditionExpression: '#qtdStock > :minInStock',

@@ -7,7 +7,7 @@ const dynamodb = DynamoDBDocumentClient.from(client); // client is DynamoDB clie
 export async function getProducts (event:any): Promise<any> {
     
     const params = new ScanCommand ({
-        TableName : 'products'
+        TableName : 'products-cdk '
     });
     
     const responsedb = await dynamodb.send(params);
