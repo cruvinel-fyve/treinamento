@@ -7,9 +7,14 @@ import { RetentionDays } from "aws-cdk-lib/aws-logs";
 import { Duration, RemovalPolicy } from "aws-cdk-lib";
 import { ParameterDataType, ParameterTier, StringParameter } from "aws-cdk-lib/aws-ssm";
 
-export function makePostOrdersLambda(this: any, app: Construct) {
+export function makePostOrdersLambda(app: Construct) {
     const functionName = 'Main-Api-Orders-postInfo';
     const importedRole = importRole(app, 'PostOrdersLambda', 'App@Lambda=FullAccess');
+
+    // const axiosLayer = new lambda.LayerVersion(app, 'AxiosLayer', {
+    //     code: lambda.Code.fromAsset(path.resolve(__dirname, './handler.ts')),
+    //     compatibleRuntimes: [lambda.Runtime.NODEJS_16_X, lambda.Runtime.NODEJS_14_X,],
+    // });
 
     const resource = new NodejsFunction(app, functionName, {
         handler: 'handler',
@@ -19,6 +24,7 @@ export function makePostOrdersLambda(this: any, app: Construct) {
         runtime: lambda.Runtime.NODEJS_16_X,
         logRetention: RetentionDays.SIX_MONTHS,
         timeout: Duration.seconds(15),
+        // layers: [axiosLayer]
     });
 
     new StringParameter(app, 'modules.lambda.api.sqs-orders', {
@@ -26,12 +32,6 @@ export function makePostOrdersLambda(this: any, app: Construct) {
         stringValue: resource.functionArn,
         dataType: ParameterDataType.TEXT,
         tier: ParameterTier.STANDARD,
-    });
-
-    new lambda.LayerVersion(this, 'AxiosLayer', {
-        removalPolicy: RemovalPolicy.RETAIN,
-        code: lambda.Code.fromAsset(path.resolve(__dirname, './handler.ts')),
-        compatibleRuntimes: [lambda.Runtime.NODEJS_16_X],
     });
 
     return resource;
