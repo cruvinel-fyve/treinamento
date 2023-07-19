@@ -6,7 +6,7 @@ export function makeOrdersTable(app: Construct) {
     const resource = new Table(app, 'OrdersTable', {
         partitionKey: { name: 'userId', type: AttributeType.STRING },
         sortKey: { name: 'date', type: AttributeType.STRING},
-        tableName: 'orders',
+        tableName: 'orders-cdk',
         stream: StreamViewType.NEW_AND_OLD_IMAGES,
         billingMode: BillingMode.PAY_PER_REQUEST,
         pointInTimeRecovery: true,

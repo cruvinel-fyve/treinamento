@@ -5,7 +5,7 @@ import { ParameterTier, ParameterDataType, StringListParameter, StringParameter 
 export function makeProductsTable(app: Construct) {
     const resource = new Table(app, 'ProductsTable', {
         partitionKey: { name: 'id', type: AttributeType.STRING },
-        tableName: 'products',
+        tableName: 'products-cdk',
         stream: StreamViewType.NEW_AND_OLD_IMAGES,
         billingMode: BillingMode.PAY_PER_REQUEST,
         pointInTimeRecovery: true,

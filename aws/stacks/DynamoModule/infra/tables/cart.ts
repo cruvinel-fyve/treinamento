@@ -6,7 +6,7 @@ export function makeCartTable(app: Construct) {
     const resource = new Table(app, 'CartTable', {
         partitionKey: {name: 'userId', type: AttributeType.STRING},
         sortKey: {name: 'productId', type: AttributeType.STRING},
-        tableName: 'cart',
+        tableName: 'cart-cdk',
         stream: StreamViewType.NEW_AND_OLD_IMAGES,
         billingMode: BillingMode.PAY_PER_REQUEST,
         pointInTimeRecovery: true
