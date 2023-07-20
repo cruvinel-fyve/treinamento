@@ -20,6 +20,6 @@ export function makeMainApi(app: Construct) {
     productsName.addMethod('GET', new LambdaIntegration(importLambda(app, 'modules.lambda.api.get-productsbyname')));
     cart.addMethod('GET', new LambdaIntegration(importLambda(app, 'modules.lambda.api.get-cart')));
     cart.addMethod('POST', new LambdaIntegration(importLambda(app, 'modules.lambda.api.post-cart')));
-    orders.addMethod('POST', new LambdaIntegration(importLambda(app, 'modules.lambda.api.sqs-orders')));
+    orders.addMethod('POST', new LambdaIntegration(importLambda(app, 'modules.lambda.api.call-lambda')));
 
 }

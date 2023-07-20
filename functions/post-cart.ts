@@ -22,8 +22,8 @@ export async function postCart (event:any): Promise<any> {
        const params = {
            TableName: 'cart-cdk',
            Item: {
-               id_user: productInCart.id_user,
-               id_product: productInCart.id_product,
+               userId: productInCart.id_user,
+               productId: productInCart.id_product,
                qtd_product: qtdProduct,
                size: productInCart.size,
                date_expiration: dataExpiration(),
@@ -49,7 +49,7 @@ export async function postCart (event:any): Promise<any> {
        // Atualizando conteúdo da página
        const client = new LambdaClient({});
        const inputLambda = { // InvocationRequest
-         FunctionName: "Dev-Training-Api-Cart-getProductInCart",
+         FunctionName: "Main-Api-Cart-getInfo",
          Payload: JSON.stringify(payloadLambda),
        };
        
@@ -144,10 +144,12 @@ const manegeCart = async (action:string, qtd:int, id_user:string, id_product:str
 const auxGetDataProduct = async (id_product:string) => {
     const params = new QueryCommand({
         TableName: 'products-cdk',
-        KeyConditionExpression: 'id_product = :id_product',
+        KeyConditionExpression: '#id_product = :id_product',
         ExpressionAttributeValues: {
             ':id_product': id_product
-        }
+        },
+        ExpressionAttributeNames : {'#id_product': 'id'},
+
     });
 
     const responsedb = await dynamodb.send(params);
@@ -164,7 +166,7 @@ const getQtdProduct = async (id_user:string, id_product:string):Promise<any> => 
     
     const params = new QueryCommand({
         TableName: 'cart-cdk',
-        KeyConditionExpression: 'id_user = :id_user and id_product = :id_product',
+        KeyConditionExpression: 'userId = :id_user and productId = :id_product',
         ExpressionAttributeValues: {
             ':id_user': id_user,
             ':id_product': id_product

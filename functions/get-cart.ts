@@ -10,10 +10,11 @@ export async function getCart (event:any): Promise<any> {
     
     const params = new QueryCommand({
         TableName: 'cart-cdk',
-        KeyConditionExpression: 'id_user = :id_user',
+        KeyConditionExpression: '#id_user = :id_user',
         ExpressionAttributeValues: {
             ':id_user': productInCart.id_user
-        }
+        },
+        ExpressionAttributeNames: {'#id_user': 'userId'}
     });
 
     const responsedb = await dynamodb.send(params);

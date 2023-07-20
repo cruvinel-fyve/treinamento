@@ -107,9 +107,12 @@ const getDataProduct = async (id_user:string) => {
     
     const params = new QueryCommand({
         TableName: 'cart-cdk',
-        KeyConditionExpression: 'id_user = :id_user',
+        KeyConditionExpression: '#id_user = :id_user',
         ExpressionAttributeValues: {
             ':id_user': id_user,
+        },
+        ExpressionAttributeNames: {
+            '#id_user': 'userId'
         }
     });
 
@@ -150,8 +153,8 @@ const putDisabledStatus = async (element:any) => {
             image: element.image,
             category: element.category,
             name: element.name,
-            id_user: element.id_user,
-            id_product: element.id_product,
+            userId: element.id_user,
+            productId: element.id_product,
             qtd_product: 0,
             size: element.size,
             amount: element.amount,
@@ -172,7 +175,7 @@ const modifyStock = async (element:any) => {
     try{
         var params = {
             TableName: 'products-cdk',
-            Key: { id_product : element.id_product },
+            Key: { id: element.id_product },
             UpdateExpression: 'set #qtdStock = #qtdStock - :qtdSale',
             ConditionExpression: '#qtdStock > :minInStock',
             ExpressionAttributeNames: {'#qtdStock' : 'qtd_estoque'},
