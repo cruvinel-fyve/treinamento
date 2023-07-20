@@ -4,8 +4,9 @@ import { NodejsFunction } from "aws-cdk-lib/aws-lambda-nodejs";
 import * as path from 'path';
 import * as lambda from '@aws-cdk/aws-lambda'
 import { RetentionDays } from "aws-cdk-lib/aws-logs";
-import { Duration, RemovalPolicy } from "aws-cdk-lib";
+import { Duration, Fn, aws_lambda_event_sources } from "aws-cdk-lib";
 import { ParameterDataType, ParameterTier, StringParameter } from "aws-cdk-lib/aws-ssm";
+import { Queue } from "aws-cdk-lib/aws-sqs";
 
 export function makePostOrdersLambda(app: Construct) {
     const functionName = 'Main-Api-Orders-postInfo';
@@ -26,6 +27,12 @@ export function makePostOrdersLambda(app: Construct) {
         timeout: Duration.seconds(15),
         // layers: [axiosLayer]
     });
+
+    const queueArn = Fn.importValue('MyQueueArn')
+
+    const queue = Queue.fromQueueArn(app, 'sqs-request-lambda-orders', queueArn)
+
+    resource.addEventSource(new aws_lambda_event_sources.SqsEventSource(queue))
 
     new StringParameter(app, 'modules.lambda.api.sqs-orders', {
         parameterName: 'modules.lambda.api.sqs-orders',

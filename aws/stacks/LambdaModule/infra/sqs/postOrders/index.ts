@@ -4,8 +4,9 @@ import { NodejsFunction } from "aws-cdk-lib/aws-lambda-nodejs";
 import * as path from 'path';
 import * as lambda from '@aws-cdk/aws-lambda'
 import { RetentionDays } from "aws-cdk-lib/aws-logs";
-import { Duration } from "aws-cdk-lib";
+import { Duration, Fn, aws_lambda_event_sources } from "aws-cdk-lib";
 import { ParameterDataType, ParameterTier, StringParameter } from "aws-cdk-lib/aws-ssm";
+import { Queue } from "aws-cdk-lib/aws-sqs";
 
 export function makeSqsOrdersLambda(app: Construct) {
     const functionName = 'Main-Api-Orders-SqsCall';

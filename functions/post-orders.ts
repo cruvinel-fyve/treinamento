@@ -7,10 +7,10 @@ const client = new DynamoDBClient({});
 const dynamodb = DynamoDBDocumentClient.from(client); // client is DynamoDB client
 
 export async function postOrders (event:any): Promise<any> {
-// console.log("event: ", event);
+    console.log("event: ", event);
     // console.log("evenRb: ", event.Records[0].body);
     const eventParse = JSON.parse(event.Records[0].body);
-    // console.log("evenParse: ", eventParse);
+    console.log("evenParse: ", eventParse);
     const productInOrder = eventParse.queryStringParameters;
     const products = await getDataProduct(productInOrder.id_user);
     //////////////////////////////////////////////
@@ -30,8 +30,8 @@ export async function postOrders (event:any): Promise<any> {
         const params = {
             TableName: 'orders-cdk',
             Item: {
-                id_user: productInOrder.id_user,
-                data: new Date().toISOString(),
+                userId: productInOrder.id_user,
+                date: new Date().toISOString(),
                 products: products,
                 //priceProducts: priceProductOrder,
                 //priceOrder: priceOrder,
@@ -154,7 +154,7 @@ const putDisabledStatus = async (element:any) => {
             category: element.category,
             name: element.name,
             userId: element.id_user,
-            productId: element.id_product,
+            productId: element.productId,
             qtd_product: 0,
             size: element.size,
             amount: element.amount,

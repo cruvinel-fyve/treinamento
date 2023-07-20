@@ -7,7 +7,7 @@ export async function sqsPostOrders (event:any): Promise<any> {
     // Configurando mensagem sqs
     const messageSQS = JSON.stringify(event);
     const input = { // SendMessageRequest
-    QueueUrl: "https://sqs.us-east-1.amazonaws.com/974775373655/requestOrderCreate", // required
+    QueueUrl: "https://sqs.us-east-1.amazonaws.com/974775373655/sqs-request-lambda-orders", // required
     MessageBody: messageSQS, // required
     };
     console.log(messageSQS)
