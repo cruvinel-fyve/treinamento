@@ -5,6 +5,7 @@ import { makeGetProductsByNameApiLambda } from "./api/get/getProductsByName";
 import { makePostCartApiLambda } from "./api/post/postCart";
 import { makePostOrdersLambda } from "./api/post/postOrders";
 import { makeSqsOrdersLambda } from "./sqs/postOrders";
+import { makeSearchAdress } from "./api/get/cep";
 
 export class GetInfoModuleLambdas extends Construct {
     constructor(scope: Construct, id: string) {
@@ -12,6 +13,7 @@ export class GetInfoModuleLambdas extends Construct {
         makeGetProductsApiLambda(this);
         makeGetCartApiLambda(this);
         makeGetProductsByNameApiLambda(this);
+        makeSearchAdress(this);
     }
 }
 export class PostInfoModuleLambdas extends Construct {
